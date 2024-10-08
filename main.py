@@ -66,7 +66,8 @@ plt.xticks(num_runs, fontsize=12)
 plt.yticks(fontsize=12)
 
 # Legend with increased font size
-plt.legend(fontsize=12, loc='lower left')
+plt.legend(fontsize=12, loc='lower left', bbox_to_anchor=(0.025, 0.75))
+
 
 # Create an inset for the zoomed view
 ax_inset = inset_axes(plt.gca(), width="30%", height="30%", loc='lower right', borderpad=2)
