@@ -3,9 +3,9 @@ import numpy as np
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 # Data for the graph
-num_runs = np.array([1, 2, 3,4,5])
-wns = np.array([-0.042, -0.035, -0.01,0.01,-0.01])  # WNS values
-tns = np.array([-10.568, -2.186, -0.01,0.01,-0.01])  # TNS values
+num_runs = np.array([1, 2])
+wns = np.array([-0.042, -0.035])  # WNS values
+tns = np.array([-10.568, -2.186])  # TNS values
 
 # Calculate percentage changes
 wns_percent_change = np.diff(wns) / wns[:-1] * 100  # Percentage change for WNS
@@ -37,6 +37,11 @@ for i in range(len(num_runs)):
              fontsize=10, ha='center', va='bottom', 
              bbox=dict(facecolor='none', edgecolor='none', boxstyle='round,pad=0.3'))
 
+    # Add current value label for WNS (skip for the first point)
+    if i > 0:  # Skip first point
+        plt.text(num_runs[i], wns[i], f'{wns[i]:.3f}', 
+                 color='black', fontsize=10, ha='left', va='center')
+
     # Determine color for TNS
     if i > 0:
         tns_color = 'green' if tns[i] > tns[i - 1] else 'red'
@@ -46,6 +51,10 @@ for i in range(len(num_runs)):
                  color=tns_color, 
                  fontsize=10, ha='center', va='bottom', 
                  bbox=dict(facecolor='none', edgecolor='none', boxstyle='round,pad=0.3'))
+
+    # Add current value label for TNS
+    plt.text(num_runs[i], tns[i], f'{tns[i]:.3f}', 
+             color='black', fontsize=10, ha='left', va='center')
 
 # Labels and title with increased font size
 plt.xlabel('# of runs', fontsize=14)
@@ -61,6 +70,7 @@ plt.legend(fontsize=12, loc='lower left')
 
 # Create an inset for the zoomed view
 ax_inset = inset_axes(plt.gca(), width="30%", height="30%", loc='lower right', borderpad=2)
+ax_inset.set_title('Zoomed near y --> 0', fontsize=10)
 
 # Plot the zoomed-in view
 ax_inset.plot(num_runs, wns, color='lightcoral', linestyle='-', marker='o', linewidth=2)
